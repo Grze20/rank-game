@@ -1,0 +1,86 @@
+h1{
+    font-size: 4rem;
+    text-align: center;
+}
+.inputContainer{
+    display: flex;
+    gap: 5px;
+}
+.formRefresh-container, .search-container, .pagination-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
+    background: #f8f9fa;
+    border: 2px solid #ced4da;
+    border-radius: 8px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+label {
+    font-size: 16px;
+    font-weight: bold;
+    color: #495057;
+}
+
+.search-input {
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #adb5bd;
+    border-radius: 6px;
+    outline: none;
+    width: 100%;
+    max-width: 200px;
+}
+
+.search-input:focus, .formRefresh:focus{
+    border-color: #007bff;
+}
+
+.formRefresh, #playersPerPage {
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #adb5bd;
+    border-radius: 6px;
+    outline: none;
+}
+
+.pagination-container button {
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+    background: #007bff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+}
+
+.pagination-container button:hover {
+    background: #0056b3;
+}
+
+.pagination-container button:disabled {
+    background: #adb5bd;
+    cursor: not-allowed;
+}
+
+/* Styl tabeli */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table th, table td {
+    border: 1px solid #dee2e6;
+    padding: 10px;
+    text-align: center;
+}
+
+table th {
+    background: #007bff;
+    color: white;
+}
