@@ -9,6 +9,7 @@ const PlayerRank = () => {
     const [searchQuery, setSearchQuery] = useState("");
     const [playersPerPage, setPlayersPerPage] = useState(2);
     const [currentPage, setCurrentPage] = useState(1);
+    const [newPlayer, setNewPlayer] = useState({ nick: "",points:0, color: "#ffffff" });
 
     useEffect(() => {
         console.log("Połączono z WebSocket");
@@ -59,10 +60,38 @@ const PlayerRank = () => {
         (currentPage - 1) * playersPerPage,
         currentPage * playersPerPage
     );
+    const addPlayer = () => {
+        if (newPlayer.nick.trim() === "" || newPlayer.nick.length<4) {
+            alert("Pole nie może być puste i musi być dłuższe niż 3 znaki");
+            return;
+        }
+        socket.emit("addPlayer", newPlayer, (response) => {
+            if (response.success) {
+                setPlayers((prevPlayers) => [...prevPlayers, response.newPlayer]);
+                setNewPlayer({ nick: "",points: 0, color: "#ffffff" });
+            } else {
+                alert("Błąd dodawania gracza: " + response.message);
+            }
+        });
+    };
 
     return (
         <div>
             <h1>Ranking Graczy</h1>
+            <div className="player-form">
+                <input
+                    type="text"
+                    placeholder="Nick gracza"
+                    value={newPlayer.nick}
+                    onChange={(e) => setNewPlayer({ ...newPlayer, nick: e.target.value })}
+                />
+                <input
+                    type="color"
+                    value={newPlayer.color}
+                    onChange={(e) => setNewPlayer({ ...newPlayer, color: e.target.value })}
+                />
+                <button onClick={addPlayer}>Dodaj Gracza</button>
+            </div>
             <div className={"inputContainer"}>
             <div className="formRefresh-container">
                 <label htmlFor="formRefresh">Częstotliwość odświeżania (s)</label>

@@ -6,6 +6,21 @@ module.exports.initRealTimeRankGameConcept = (io) => {
     console.log("User connected:", socket.id);
             let interval = null;
             let refreshRate = 0;
+
+
+            socket.on("addPlayer", async (newPlayer, callback) => {
+                try {
+                    const createdPlayer = await PlayerController.addPlayer(newPlayer);
+                    callback({ success: true, newPlayer: createdPlayer });
+
+                    const players = await PlayerController.getAllPlayers();
+                    await PlayerController.updatePlayers(players)
+                    await PlayerController.sortedPlayers(players)
+                    io.emit("showPlayers", players);
+                } catch (error) {
+                    callback({ success: false, message: "Błąd dodawania gracza" });
+                }
+            });
     const sendData = async () => {
         try {
             const players = await PlayerController.getAllPlayers()
@@ -42,13 +57,10 @@ module.exports.initRealTimeRankGameConcept = (io) => {
                 }
             });
 
+
             socket.on("requestData", sendData);
-
-        socket.on("disconnect", () => {
-
+            socket.on("disconnect", () => {
                 clearInterval(interval);
-
-
             console.log("User disconnected:", socket.id);
         });
     }

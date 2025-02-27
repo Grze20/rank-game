@@ -17,6 +17,9 @@ class PlayerController  {
     async sortedPlayers(players){
         await players.sort((a, b) => b.points - a.points)
     }
+    async addPlayer(newPlayer){
+        return await new Player(newPlayer).save()
+    }
 }
 
 module.exports = new PlayerController();
